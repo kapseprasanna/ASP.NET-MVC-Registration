@@ -1,0 +1,139 @@
+﻿@model RegisterationMvc.Models.RegistrationModel
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>@ViewBag.Message</h2>
+@*<style>
+    .d-flex {
+        display: flex;
+    }
+</style>*@
+<link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+
+<section class="h-100 bg-dark">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          
+                <div class="card card-registration my-4 d-flex" id="main">
+                 
+                        <div class="col-md-5">
+                            <div class="card-body p-md-5 text-black">
+                                <h3 class="mb-5 text-uppercase">User Registration</h3>
+
+                                @using (Html.BeginForm("Register", "Register", FormMethod.Post, new { id = "registrationForm", @class = "needs-validation", novalidate = "novalidate" })) {
+                                    @Html.AntiForgeryToken()
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div>
+                                                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "form-label" })
+                                                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control input", required = "required", placeholder = "Enter your first name" })
+                                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "invalid-feedback" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div>
+                                                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "form-label" })
+                                                @Html.TextBoxFor(model => model.LastName, new { @class = "form-control input", required = "required", placeholder = "Enter your last name" })
+                                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "invalid-feedback" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                @Html.LabelFor(model => model.Company, htmlAttributes: new { @class = "form-label" })
+                                                @Html.TextBoxFor(model => model.Company, new { @class = "form-control input", placeholder = "Enter your company name" })
+                                                @Html.ValidationMessageFor(model => model.Company, "", new { @class = "invalid-feedback" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-label" })
+                                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control input", required = "required", type = "email", placeholder = "Enter your email address" })
+                                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "invalid-feedback" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br>
+
+                                    <div class="mb-3">
+                                        @Html.LabelFor(model => model.Mobile, htmlAttributes: new { @class = "form-label" })
+                                        @Html.TextBoxFor(x => x.Mobile, new { @class = "form-control  mobile-input", placeholder = "Enter your mobile number" })
+                                        @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "invalid-feedback" })
+                                    </div>
+
+                                    <br>
+
+                                    <div class="mb-3">
+                                        @Html.Label("Gender", htmlAttributes: new { @class = "form-label" })
+                                        <div>
+                                            @if (Model.AvailableGenders != null) {
+                                                <div class="d-flex">
+                                                    @foreach (var genderOption in Model.AvailableGenders) {
+                                                        <div class="form-check form-check-inline">
+                                                            @Html.RadioButtonFor(model => model.Gender, genderOption, new { @class = "form-check-input", required = "required" })
+                                                            <label class="form-check-label">@genderOption</label>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            }
+                                            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "invalid-feedback" })
+                                        </div>
+                                    </div>
+
+
+                                    <div>
+                                        <div class="form-floating ">
+                                            @Html.LabelFor(model => model.SelectedCountryName, "Country", htmlAttributes: new { @class = "form-label" })
+                                            <div>
+                                                @Html.DropDownListFor(model => model.SelectedCountryName, ViewBag.Countries as List<SelectListItem>, "Select Country", new { @class = "form-control  mw-100", id = "CountryDropDown", required = "required" })
+                                                @Html.ValidationMessageFor(model => model.SelectedCountryName, "", new { @class = "invalid-feedback" })
+                                                @Html.HiddenFor(model => model.SelectedCountryText, new { id = "SelectedCountryText" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div>
+                                        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "form-label" })
+                                        @Html.TextAreaFor(model => model.Address, new { @class = "form-control", rows = "3", required = "required", placeholder = "Enter your address" })
+                                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "invalid-feedback" })
+                                    </div>
+
+                                    <br>
+
+                                    <div>
+                                        <button type="submit" class="btn btn-dark">Submit</button>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="mt-5">
+                            <img src="https://images.unsplash.com/photo-1556155092-490a1ba16284?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" style="height:500px ; width:700px;" / >
+                        </div>  
+                  
+                </div>
+            </div>
+        </div>
+
+
+</section>
+
+<script>
+    $(document).ready(function () {
+        // Update hidden field with selected country text
+        $("#CountryDropDown").change(function () {
+            var selectedOption = $(this).find("option:selected").text();
+            $("#SelectedCountryText").val(selectedOption);
+        });
+    });
+</script>

@@ -1,0 +1,24 @@
+﻿.d-flex {
+    display: flex;
+}
+
+
+.form-check-inline {
+    margin-right: 10px;
+}
+
+/*img {
+    height:100px;
+    width:100px;
+}*/
+
+
+
+
+.mobile-input {
+    width:100%;
+}
+
+.input {
+    width:90%;
+}
